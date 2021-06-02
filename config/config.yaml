@@ -1,0 +1,62 @@
+# This file should contain everything to configure the workflow on a global scale.
+# In case of sample based data, it should be complemented by a samples.tsv file that contains
+# one row per sample. It can be parsed easily via pandas.
+samples: "config/samples.tsv"
+units: "config/units.tsv"
+
+common:
+  build: 'hg19'
+  genome: '/mnt/work1/data/genomes/human/hg19/iGenomes/Sequence/WholeGenomeFasta/genome.fa'
+
+params:
+  bwa:
+    mem:
+      genome: '/mnt/work1/data/genomes/human/hg19/iGenomes/Sequence/BWAIndex/genome.fa'
+  gatk:
+    baserecalibrator:
+      - "-rf BadCigar"
+      - "-dt NONE"
+      - "-cov ReadGroupCovariate"
+      - "-cov ContextCovariate"
+      - "-cov CycleCovariate"
+      - "-cov QualityScoreCovariate"
+    printreads:
+      - "-rf BadCigar"
+      - "-dt NONE"
+    collectalleliccounts:
+      target: "/mnt/work1/users/pughlab/references/dbsnp/dbsnp_b146_GRCh37p13/chr_bed/all.chr.common_all_20151104.bed"
+      min_n: 2
+    snp_hg19:
+      dbsnp: '/mnt/work1/data/genomes/human/hg19/variantcallingdata/dbsnp_138.hg19.vcf'
+      1000gsnps: '/mnt/work1/data/genomes/human/hg19/variantcallingdata/1000G_phase1.snps.high_confidence.hg19.vcf'
+    indel_hg19:
+      dbsnp: '/mnt/work1/data/genomes/human/hg19/variantcallingdata/dbsnp_138.hg19.vcf'
+      1000gindels: '/mnt/work1/data/genomes/human/hg19/variantcallingdata/1000G_phase1.indels.hg19.vcf'
+      millsindels: '/mnt/work1/data/genomes/human/hg19/variantcallingdata/Mills_and_1000G_gold_standard.indels.hg19.vcf'
+      mills1000gindels: '/mnt/work1/data/genomes/human/hg19/variantcallingdata/Mills_and_1000G_gold_standard.indels.hg19.vcf'
+    snp_hg38:
+      dbsnp: '/mnt/work1/data/genomes/human/hg38/hg38bundle/dbsnp_144.hg38.vcf.gz'
+      1000gsnps: '/mnt/work1/data/genomes/human/hg38/hg38bundle/1000G_phase1.snps.high_confidence.hg38.vcf.gz'
+    indel_hg38:
+      dbsnp: '/mnt/work1/data/genomes/human/hg38/hg38bundle/dbsnp_144.hg38.vcf.gz'
+      1000gindels: '/mnt/work1/data/genomes/human/hg38/hg38bundle/Homo_sapiens_assembly38.variantEvalGoldStandard.vcf.gz'
+      millsindels: '/mnt/work1/data/genomes/human/hg38/hg38bundle/Homo_sapiens_assembly38.known_indels.vcf'
+      mills1000gindels: '/mnt/work1/data/genomes/human/hg38/hg38bundle/Mills_and_1000G_gold_standard.indels.hg38.vcf'
+  readcounter:
+    window: 1000000
+    quality: 20
+  ichorcna:
+    ploidy: "c(2,3)"
+    normal: "c(0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)"
+    genome_style: NCBI
+    maxCN: 5
+    include_HOMD: True
+    estimateNormal: True
+    estimatePloidy: True
+    estimateScPrevalence: True
+    sc_states: "c(1,3)"
+    txnE: 0.9999
+    txn_strength: 10000
+    
+    
+    

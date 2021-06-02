@@ -1,0 +1,23 @@
+# The main entry point of your workflow.
+# After configuring, running snakemake -n in a clone of this repository should successfully execute a dry-run of the workflow.
+
+
+include: "rules/common.smk"
+include: "rules/other.smk"
+
+rule all:
+    input:
+
+
+#      "results/plots/qc/wgs_insert_metrics.pdf",
+#      expand("results/plots/cnv/{sample}_genomeWide.pdf", sample=samples.index),
+#      expand("results/zygosity/wadingpool/hmmfit_{sample}.pdf", sample=samples.index),
+#      "results/sampleid/autosome/similarity_autosome.pdf",
+#      "results/zygosity/AD/aggregate_filt.csv",
+#      "results/zygosity/AD/aggregate_pos.txt",
+#      "results/zygosity/AD/aggregate_lines.txt",
+#      "results/tables/genotypeID/chrM_sampleid_n.tsv",
+#      "results/tables/genotypeID/chrM_sampleid_jacc.tsv",
+#      "results/plots/genotypeID/chrM_sampleid.pdf",
+#      "results/tables/chrM/chrM_copies.tsv",
+#      "results/plots/chrM/chrM_copies.pdf",
