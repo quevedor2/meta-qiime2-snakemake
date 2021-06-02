@@ -1,0 +1,52 @@
+__default__:
+  mem : 4G
+  cpus-per-task : 1
+  partition : 'all'
+  time : 02:00:00
+
+bwa_mem:
+  cpus-per-task : 4
+  mem : 16G
+
+indelrealigner:
+  mem : 8192
+  cpus-per-task : 8
+  time : 04:00:00
+
+realigner_target_creator:
+  mem : 8192
+  cpus-per-task : 8
+
+mark_duplicates:
+  mem : 8192
+  cpus-per-task : 8
+
+baserecalibrator:
+  mem : 8192
+  cpus-per-task : 8
+  time : 04:00:00
+
+printreads:
+  mem : 8192
+  cpus-per-task : 8
+  time : 04:00:00
+
+collect_multiple_metrics:
+  mem : 4096
+  cpus-per-task : 4
+
+ichorcna:
+  mem : 8192
+  cpus-per-task : 8
+
+collect_allelic_counts:
+  mem : 20G
+  cpus-per-task : 4
+
+run_wp_zygosity:
+  mem : 10G
+  cpus-per-task : 4
+
+run_wp_identity_autosome:
+  mem : 10G
+  cpus-per-task : 4
