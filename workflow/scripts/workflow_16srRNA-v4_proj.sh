@@ -213,20 +213,26 @@ done
 
 
 # Taxonomic Analysis
-mkdir -p test/taxonomy
-## Use a pre-trained Naive Bayes classifier to classify the taxa of each sequence
-classifier='silva-138-99-nb-classifier.qza'
-qiime feature-classifier classify-sklearn \
-  --i-classifier data/16S/classifiers/${classifier} \
-  --i-reads test/seqQC/DADA2/rep-seqs.qza \
-  --o-classification test/taxonomy/taxonomy.qza
+for direction in f r; do
+  dadaDIR="outputs/se/${direction}/features/DADA2"
+  taxaDIR="outputs/se/${direction}/taxonomy"
+  mkdir -p ${taxaDIR}/views
+  ## Use a pre-trained Naive Bayes classifier to classify the taxa of each sequence
+  classifier_dir='/cluster/projects/mcgahalab/ref/metagenomics/16s_classifiers'
+  classifier='silva-138-99-nb-weighted-classifier.qza'
+  
+  qiime feature-classifier classify-sklearn \
+    --i-classifier ${classifier_dir}/${classifier} \
+    --i-reads ${dadaDIR}/${ID}.rep_seq.qza \
+    --o-classification ${taxaDIR}/${ID}.taxonomy.qza
 
-qiime metadata tabulate \
---m-input-file test/taxonomy/taxonomy.qza \
---o-visualization test/taxonomy/taxonomy.qzv
+  qiime metadata tabulate \
+  --m-input-file ${taxaDIR}/${ID}.taxonomy.qza \
+  --o-visualization ${taxaDIR}/views/${ID}.taxonomy.qzv
 
-qiime taxa barplot \
-  --i-table test/seqQC/DADA2/table.qza \
-  --i-taxonomy test/taxonomy/taxonomy.qza \
-  --m-metadata-file data/16S/sample_metadata.tsv \
-  --o-visualization test/taxonomy/taxa-bar-plots.qzv
+  qiime taxa barplot \
+    --i-table ${dadaDIR}/${ID}.table.qza \
+    --i-taxonomy ${taxaDIR}/${ID}.taxonomy.qza \
+    --m-metadata-file data/metadata/sample_metadata-stool.tsv \
+    --o-visualization ${taxaDIR}/views/${ID}.taxa-bar-plots.qzv
+done
