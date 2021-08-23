@@ -37,16 +37,31 @@ biobakery_workflows wmgx \
 --local-jobs 2 --threads 2
 
 
-
---input data \
---output results/biobakery3 \
-
-
+conda activate biobakery3viz
 module load texlive/2019
 biobakery_workflows wmgx_vis \
 --input /cluster/projects/pughlab/projects/cancer_cell_lines/tmp/tutorial/output_bkup \
 --project-name Demo_Test \
 --output /cluster/projects/pughlab/projects/cancer_cell_lines/tmp/tutorial/output_bkup/viz
+
+conda activate biobakery3viz
+module load texlive/2019
+biobakery_workflows wmgx_vis \
+--input /cluster/projects/mcgahalab/data/mcgahalab/PASS/shotgun/results/biobakery3 \
+--project-name PASS \
+--output /cluster/projects/mcgahalab/data/mcgahalab/PASS/shotgun/results/biobakery3/viz
+
+conda activate biobakery3viz
+module load texlive/2019
+biobakery_workflows stats \
+--input /cluster/projects/mcgahalab/data/mcgahalab/PASS/shotgun/results/biobakery3 \
+--input-metadata $INPUT_METADATA \
+--output /cluster/projects/mcgahalab/data/mcgahalab/PASS/shotgun/results/biobakery3/stats \
+--project-name PASS
+
+
+
+
 
 /cluster/home/quever/miniconda3/envs/biobakery3viz/share/tlpkg
 /cluster/home/quever/miniconda3/envs/biobakery3viz/share/texmf-dist/scripts/texlive
