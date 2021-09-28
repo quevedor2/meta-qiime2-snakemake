@@ -29,7 +29,7 @@ getTaxa <- function(taxas, lvl="species", split_regex="\\."){
 
 drop_samples <- c("HFD-Day16-1", "Undetermined")
 imp_n <- 4
-lvl_f     <- 'r_level-6'
+lvl_f     <- 'r_level-7'
 lvl_taxa  <- if(gsub("^.*-", "", lvl_f) == '6') 'genus' else 'species'
 
 ################################
@@ -100,6 +100,32 @@ ggbps <- lapply(taxa_spl, function(tgrp){
 })
 cow_barp <- plot_grid(plotlist=ggbps, ncol=1)
 
+ggbps_all <- lapply(taxa_spl, function(tgrp){
+  taxa_pattern <- paste0("^", substr(lvl_taxa, 1, 1), "__")
+  tgrp <- tgrp[grep(taxa_pattern, as.character(tgrp$Taxa)),]
+  bigtaxa <- nchar(as.character(tgrp$Taxa)) > 30
+  levels(tgrp$Taxa) <- substr(as.character(tgrp$Taxa), 1, 30)
+  grp <- unique(as.character(tgrp$group))
+  
+  ggplot(tgrp, aes(fill=Taxa, y=Fraction, x=SampleID)) + 
+    facet_grid(cols=vars(day), space='free', scales = "free") +
+    geom_bar(position="fill", stat="identity", show.legend = TRUE) +
+    theme_minimal() +
+    ggtitle(grp) + 
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+          axis.title.x = element_blank()) +
+    scale_fill_manual(values=rep(brewer.pal(12, 'Set3'), 5))
+})
+pdf(file.path("taxonomy", "data", paste0(lvl_f, ".pdf")), width = 20)
+legend <- legend <- get_legend(
+  # create some space to the left of the legend
+  ggbps_all[[1]] + theme(legend.box.margin = margin(0, 0, 0, 12))
+)
+prow <- plot_grid(ggbps_all[[1]] + theme(legend.position='none'),
+                  ggbps_all[[2]] + theme(legend.position='none'), nrow=2)
+plot_grid(prow, legend, rel_widths = c(2, 1))
+dev.off()
+
 ## GGplot spaghetti plots of relative fractions of important taxas
 taxa_melt$group_mouse <- with(taxa_melt, paste0(group, "_", mouse))
 taxa_melt$group_day <- with(taxa_melt, paste0(group, "_", day))
@@ -159,7 +185,11 @@ cow_stats <- plot_grid(plotlist=ggstat, ncol=1)
 
 
 
-pdf(file.path("longitudinal", "data", paste0(lvl_f, ".pdf")), height = 15, width=12)
+pdf(file.path("longitudinal", "data", paste0(lvl_f, ".pdf")), height = 17, width=12)
 cow_spag_stats <- plot_grid(cow_spag, cow_stats, ncol=2)
-plot_grid(cow_barp, cow_spag_stats, nrow=2)
+plot_grid(cow_barp, cow_spag_stats, nrow=2, rel_heights = c(1,2))
+dev.off()
+
+pdf(file.path("longitudinal", "data", paste0(lvl_f, "_importance.pdf")), height = 17, width=6)
+plot_grid(cow_stats)
 dev.off()
