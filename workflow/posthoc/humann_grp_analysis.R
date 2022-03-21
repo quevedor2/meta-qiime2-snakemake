@@ -3,7 +3,7 @@ library(ggplot2)
 library(DESeq2)
 
 
-PDIR <- '/Users/rquevedo/Projects/mcgaha/PASS/shotgun/data'
+PDIR <- '/Users/rquevedo/Projects/mcgaha/PASS/shotgun/data/mouse'
 outdir <- '~/Projects/mcgaha/PASS/shotgun/results/functional/'
 dir.create(outdir, recursive = TRUE, showWarnings = FALSE)
 setwd(PDIR)

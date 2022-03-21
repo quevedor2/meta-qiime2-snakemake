@@ -10,7 +10,7 @@ ID='teresa_metagenomics'
 PROJDIR='/cluster/projects/mcgahalab/data/mcgahalab/PASS/16s'
 ID='PASS'
 cd ${PROJDIR}
-conda activate qiime2-2021.4
+conda activate ~/mcgahalab/envs/qiime2
 
 
 ## Assembling PE manifest for PHRED33v2

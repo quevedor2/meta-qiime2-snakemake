@@ -9,7 +9,7 @@ wget 'https://data.qiime2.org/2021.4/tutorials/fmt/sample_metadata.tsv'
 # Sequence QC
 ## Simple visualization of the demultiplexed data
 cd /mnt/work1/users/home2/quever/git/meta-qiime2-snakemake
-conda activate qiime2-2021.4
+conda activate ~/mcgahalab/envs/qiime2
 mkdir -p test/seqQC
 
 for ID in fmt-tutorial-demux-1-10p fmt-tutorial-demux-2-10p; do

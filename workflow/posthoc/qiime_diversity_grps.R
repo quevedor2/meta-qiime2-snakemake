@@ -65,7 +65,7 @@ ever <- read.table(file.path(data_dir, "evenness_r.tsv"), header=TRUE,
 gg_evef <- plotBox(evef, value='pielou_evenness')
 gg_ever <- plotBox(ever, value='pielou_evenness')
 
-pdf(file.path(data_dir, "evenness.pdf"), height = 7)
+pdf(file.path(qc_dir, "evenness.pdf"), height = 7)
 plot_grid(gg_evef$gg, gg_ever$gg, nrow=2)
 dev.off()
 
@@ -78,5 +78,35 @@ fpdr <- read.table(file.path(data_dir, "faithpd_r.tsv"), header=TRUE,
 gg_fpdf <- plotBox(fpdf, value='faith_pd')
 gg_fpdr <- plotBox(fpdr, value='faith_pd')
 
+pdf(file.path(qc_dir, "faith.pdf"), height = 7)
 plot_grid(gg_fpdf$gg, gg_fpdr$gg, nrow=2)
+dev.off()
+
+## Beta - Unweighted-Unifrac Distance
+uudf <- read.table(file.path(data_dir, "unweighted_unifrac_f.tsv"), header=TRUE, 
+                   stringsAsFactors = FALSE, sep="\t")
+uudr <- read.table(file.path(data_dir, "unweighted_unifrac_r.tsv"), header=TRUE, 
+                   stringsAsFactors = FALSE, sep="\t")
+
+pbl_fr <- lapply(list("f"=uudf, "r"=uudr), function(uud){
+  uud <- uud[-c(grep("^Unk", uud$Group1), grep("^Unk", uud$Group2)),]
+  uud$Mouse <- gsub("^.*-", "", uud$SubjectID1)
+  uud$study.id <- gsub("-.*", "", uud$SubjectID1)
+  uud$group.day <- uud$Group1
+  uud$comp2 <- gsub("-.*", "", uud$Group2)
+  
+  uud_spl <- split(uud, uud$comp2)
+  pbl <- lapply(uud_spl, function(i){
+    i$Group2 <- factor(i$Group2, levels=unique(i$Group2))
+    plotBox(i, value="Distance")$gg + 
+      facet_grid(cols=vars(Group2))
+  })
+})
+
+pdf(file.path(qc_dir, "unweighted-unifrac.pdf"), height = 7, width = 12)
+plot_grid(plotlist = pbl_fr$f, nrow=2)
+plot_grid(plotlist = pbl_fr$r, nrow=2)
+dev.off()
+
+
 

@@ -1,6 +1,5 @@
 conda activate biobakery3
 
-
 PROJDIR='/cluster/projects/mcgahalab/data/mcgahalab/PASS/shotgun'
 cd ${PROJDIR}
 
@@ -19,7 +18,7 @@ biobakery_workflows wmgx \
 --input data \
 --output results/biobakery3 \
 --qc-options "--trimmomatic /cluster/home/quever/miniconda3/envs/biobakery3/share/trimmomatic-0.39-2" \
---taxonomic-profiling-options "--index mpa_v30_CHOCOPhlAn_201901 --bowtie2db /cluster/home/quever/miniconda3/envs/biobakery3/lib/python3.7/site-packages/metaphlan/metaphlan_databases" \
+--taxonomic-profiling-options "-t rel_ab_w_read_stats --index mpa_v30_CHOCOPhlAn_201901 --bowtie2db /cluster/home/quever/miniconda3/envs/biobakery3/lib/python3.7/site-packages/metaphlan/metaphlan_databases" \
 --functional-profiling-options "--protein-database /cluster/projects/mcgahalab/ref/metagenomics/biobakery_workflows_databases/humann/uniref" \
 --contaminate-databases "/cluster/projects/mcgahalab/ref/metagenomics/biobakery_workflows_databases/kneaddata_db_human_genome" \
 --bypass-strain-profiling \
@@ -30,12 +29,42 @@ biobakery_workflows wmgx \
 --input input \
 --output output_bkup \
 --qc-options "--trimmomatic /cluster/home/quever/miniconda3/envs/biobakery3/share/trimmomatic-0.39-2" \
---taxonomic-profiling-options "--index mpa_v30_CHOCOPhlAn_201901 --bowtie2db /cluster/home/quever/miniconda3/envs/biobakery3/lib/python3.7/site-packages/metaphlan/metaphlan_databases" \
+--taxonomic-profiling-options "-t rel_ab_w_read_stats --index mpa_v30_CHOCOPhlAn_201901 --bowtie2db /cluster/home/quever/miniconda3/envs/biobakery3/lib/python3.7/site-packages/metaphlan/metaphlan_databases" \
 --functional-profiling-options "--protein-database /cluster/projects/mcgahalab/ref/metagenomics/biobakery_workflows_databases/humann/uniref" \
 --contaminate-databases "/cluster/projects/mcgahalab/ref/metagenomics/biobakery_workflows_databases/kneaddata_db_human_genome" \
 --bypass-strain-profiling \
 --local-jobs 2 --threads 2
 
+PDIR='/cluster/projects/mcgahalab/data/mcgahalab/PASS/shotgun'
+KNEAD="${PDIR}/results/biobakery3/kneaddata/main"
+DATABASE='/cluster/projects/mcgahalab/ref/metagenomics/biobakery_workflows_databases/kneaddata_db_human_genome'
+cd ${PDIR}
+
+for id in $(cat samples.txt); do
+  echo ${id}
+  id='PASS_S10'
+  kneaddata --input ${PDIR}/data/${id}.R1.fastq.gz \
+  --input ${PDIR}/data/${id}.R2.fastq.gz \
+  -db ${DATABASE} \
+  --trimmomatic /cluster/home/quever/miniconda3/envs/biobakery3/share/trimmomatic-0.39-2 \
+  --output ${KNEAD}
+done
+
+PDIR='/cluster/projects/mcgahalab/data/mcgahalab/PASS/shotgun'
+KNEAD="${PDIR}/results/biobakery3/kneaddata/main"
+cd ${PDIR}
+for id in $(cat samples.txt); do
+  echo ${id}
+  metaphlan ${KNEAD}/${id}_paired_1.fastq,${KNEAD}/${id}_paired_2.fastq \
+  -t rel_ab_w_read_stats \
+  -o ${PDIR}/results/metaphlan/${id}.s1.tsv \
+  --input_type fastq \
+  --index mpa_v30_CHOCOPhlAn_201901 \
+  --bowtie2db /cluster/home/quever/miniconda3/envs/biobakery3/lib/python3.7/site-packages/metaphlan/metaphlan_databases \
+  --biom ${PDIR}/results/metaphlan/${id}.biom \
+  --bowtie2out ${PDIR}/results/metaphlan/${id}.s1.bowtie2.bz2 \
+  --nproc 4
+done
 
 conda activate biobakery3viz
 module load texlive/2019
@@ -98,3 +127,13 @@ diamond v0.9.36.137 (C) Max Planck Society for the Advancement of Science
 Documentation, support and updates available at http://www.diamondsearch.org
 
 #CPU threads: 3
+grep -E "s__|taxonomy" metaphlan_taxonomic_profiles.tsv | sed 's/^.*s__//g' | sed -e 's/# taxon omy/body_site/g' > merged_abundance_table_species.txt
+hclust2.py -i merged_abundance_table_species.txt -o abundance_heatmap_species.png \
+--f_dist_f braycurtis --s_dist_f braycurtis --cell_aspect_ratio 0.5 \
+-l --flabel_size 1 --slabel_size 1 --max_flabel_len 100 --max_slabel_len 100 \
+--minv 0.1 --dpi 500
+
+ln -s metaphlan_taxonomic_profiles.tsv  merged_abundance_table_reformatted.txt
+export2graphlan.py --skip_rows 1 -i merged_abundance_table_reformatted.txt \
+--tree merged_abundance.tree.txt --annotation merged_abundance.annot.txt \
+--most_abundant 100 --abundance_threshold 1 --least_biomarkers 10 \
