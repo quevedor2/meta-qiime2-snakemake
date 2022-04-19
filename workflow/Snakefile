@@ -5,23 +5,11 @@
 include: "rules/common.smk"
 include: "rules/other.smk"
 include: "rules/kneaddata.smk"
-include: "rules/metaphlan.smk"
-include: "rules/humann.smk"
-include: "rules/strainphlan.smk"
+#include: "rules/metaphlan.smk"
+#include: "rules/humann.smk"
+#include: "rules/strainphlan.smk"
 
 rule all:
     input:
+	expand("results/kneaddata/main/{sample}_{unit}.R1_kneaddata_paired_1.fastq.gz", sample=samples.index, unit=units.index),
 
-
-#      "results/plots/qc/wgs_insert_metrics.pdf",
-#      expand("results/plots/cnv/{sample}_genomeWide.pdf", sample=samples.index),
-#      expand("results/zygosity/wadingpool/hmmfit_{sample}.pdf", sample=samples.index),
-#      "results/sampleid/autosome/similarity_autosome.pdf",
-#      "results/zygosity/AD/aggregate_filt.csv",
-#      "results/zygosity/AD/aggregate_pos.txt",
-#      "results/zygosity/AD/aggregate_lines.txt",
-#      "results/tables/genotypeID/chrM_sampleid_n.tsv",
-#      "results/tables/genotypeID/chrM_sampleid_jacc.tsv",
-#      "results/plots/genotypeID/chrM_sampleid.pdf",
-#      "results/tables/chrM/chrM_copies.tsv",
-#      "results/plots/chrM/chrM_copies.pdf",
