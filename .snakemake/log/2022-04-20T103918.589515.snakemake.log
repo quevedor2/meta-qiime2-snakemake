@@ -1,4 +1,0 @@
-SyntaxError:
-Not all output, log and benchmark files of rule kneaddata_pe contain the same wildcards. This is crucial though, in order to avoid that two or more jobs write to the same file.
-  File "/cluster/home/quever/workflows/metagenomic_snakemake/workflow/Snakefile", line 9, in <module>
-  File "/cluster/home/quever/workflows/metagenomic_snakemake/workflow/rules/kneaddata.smk", line 19, in <module>

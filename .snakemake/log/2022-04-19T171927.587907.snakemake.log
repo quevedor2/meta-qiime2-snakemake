@@ -1,2 +1,0 @@
-SyntaxError in line 16 of /cluster/home/quever/workflows/metagenomic_snakemake/workflow/Snakefile:
-Unexpected keyword expand in rule definition (Snakefile, line 16)

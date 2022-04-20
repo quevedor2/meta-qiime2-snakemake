@@ -1,5 +1,0 @@
-Building DAG of jobs...
-MissingInputException in line 13 of /cluster/home/quever/workflows/metagenomic_snakemake/workflow/Snakefile:
-Missing input files for rule all:
-results/kneaddata/main/('demo1', 'x').R1_kneaddata_paired_1.fastq.gz
-results/kneaddata/main/('demo2', 'x').R1_kneaddata_paired_1.fastq.gz
