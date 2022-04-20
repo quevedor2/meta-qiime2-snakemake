@@ -8,10 +8,15 @@ database:
   nucleotide: ""
   protein: ""
   kneaddata_human: "/cluster/projects/mcgahalab/ref/metagenomics/biobakery_workflows_databases/kneaddata_db_human_genome"
+  bowtie2db: "/cluster/projects/mcgahalab/ref/metagenomics/biobakery_workflows_databases/metaphlan/metaphlan_databases"
 
 tools:
   trimmomatic: "/cluster/projects/mcgahalab/bin/trimmomatic-0.39-2"
 
+resources:
+  metaphlan_nrpoc: 4
+
 env:
   conda_shell: "~/miniconda3/etc/profile.d/conda.sh"
   biobakery3_core: "/cluster/projects/mcgahalab/envs/biobakery3_core"
+  r41: "/cluster/projects/mcgahalab/envs/r41"

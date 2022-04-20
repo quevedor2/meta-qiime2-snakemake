@@ -68,3 +68,13 @@ def get_fq2(wildcards):
     #u = units.loc[ (wildcards.sample, '1'), ["fq1", "fq2"] ].dropna()
     u = units.loc[ (wildcards.sample), ["fq1", "fq2"] ].dropna()
     return [ f"{u.fq2}" ]
+
+def get_all_metaphlan_tables(wildcards):
+    res = []
+    for unit in units.itertuples():
+        res.append(
+            "results/metaphlan/main/{}.s1.tsv".format(
+                unit.sample_name
+            )
+        )
+    return res
