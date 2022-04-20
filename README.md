@@ -31,7 +31,44 @@ Install Snakemake using [conda](https://conda.io/projects/conda/en/latest/user-g
 
 For installation details, see the [instructions in the Snakemake documentation](https://snakemake.readthedocs.io/en/stable/getting_started/installation.html).
 
-### Step 4: Execute workflow
+### Step 4: Configure conda environment ###
+The following will let you activate pre-built conda environments in a rule when submitting jobs to the cluster and is based off the post by Samir on https://stackoverflow.com/questions/59107413/activating-existing-conda-enviornments-in-snakemake (Jun 4-2021)
+
+Back up your original conda file:
+
+    `cp ~/miniconda3/etc/profile.d/conda.sh ~/miniconda3/etc/profile.d/conda_bkup.sh`
+
+Modify your `conda.sh` file to add the following within the **__conda_activate()** block:
+    ```__conda_activate() {
+    if [[ "$-" =~ .*u.* ]]; then
+        local bash_set_u
+        bash_set_u="on"
+        ## temporarily disable u flag
+        ## allow unbound variables from conda env
+        ## during activate/deactivate commands in
+        ## subshell else script will fail with set -u flag
+        ## https://github.com/conda/conda/issues/8186#issuecomment-532874667    
+        set +u
+    else
+        local bash_set_u
+        bash_set_u="off"
+    fi
+    
+    # ... rest of code from the original script
+    ```
+
+Add the follwoing section to the end of your **_conda_activate()** block:
+
+    ```
+    ## reenable set -u if it was enabled prior to
+    ## conda activate/deactivate operation
+    if [[ "${bash_set_u}" == "on" ]]; then
+        set -u
+    fi
+    }
+    ```
+
+### Step 5: Execute workflow
 
 Activate the conda environment:
 
@@ -60,7 +97,7 @@ If you not only want to fix the software stack but also the underlying OS, use
 in combination with any of the modes above.
 See the [Snakemake documentation](https://snakemake.readthedocs.io/en/stable/executable.html) for further details.
 
-### Step 5: Investigate results
+### Step 6: Investigate results
 
 After successful execution, you can create a self-contained interactive HTML report with all results via:
 
@@ -69,14 +106,14 @@ After successful execution, you can create a self-contained interactive HTML rep
 This report can, e.g., be forwarded to your collaborators.
 An example (using some trivial test data) can be seen [here](https://cdn.rawgit.com/snakemake-workflows/rna-seq-kallisto-sleuth/master/.test/report.html).
 
-### Step 6: Commit changes
+### Step 7: Commit changes
 
 Whenever you change something, don't forget to commit the changes back to your github copy of the repository:
 
     git commit -a
     git push
 
-### Step 7: Obtain updates from upstream
+### Step 8: Obtain updates from upstream
 
 Whenever you want to synchronize your workflow copy with new developments from upstream, do the following.
 
@@ -88,7 +125,7 @@ Whenever you want to synchronize your workflow copy with new developments from u
 6. Carefully check whether you need to update the config files: `git diff HEAD upstream/master config`. If so, do it manually, and only where necessary, since you would otherwise likely overwrite your settings and samples.
 
 
-### Step 8: Contribute back
+### Step 9: Contribute back
 
 In case you have also changed or added steps, please consider contributing them back to the original repository:
 
