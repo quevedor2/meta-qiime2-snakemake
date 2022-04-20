@@ -73,9 +73,9 @@ rule regroup_humann:
 
 rule merge_human_raw:
     input:
-        ecs=get_raw_ecs,
-        genefamilies=get_raw_genefamilies,
-        pathabundance=get_raw_pathabundance,
+        ecs=expand("results/humann/main/regrouped/{sample}.ecs.tsv", sample=samples.index),
+        genefamilies=expand("results/humann/main/{sample}.merged_genefamilies.tsv", sample=samples.index),
+        pathabundance=expand("results/humann/main/{sample}.merged_pathabundance.tsv", sample=samples.index),
     output:
         ecs="results/humann/merged/ecs.tsv",
         genefamilies="results/humann/merged/genefamilies.tsv",
@@ -86,6 +86,8 @@ rule merge_human_raw:
         pathabundance="results/humann/main/",
         conda=config['env']['conda_shell'],
         env=directory(config['env']['biobakery3_core']),
+#    conda:
+#        "../envs/biobakery3_core.yaml",
     log:
         "logs/humann/join_table_raw.log",
     shell:
@@ -104,6 +106,83 @@ rule merge_human_raw:
 
         humann_join_tables \
         --input {params.pathabundance} \
+        --output {output.pathabundance} \
+        --file_name pathabundance;
+        """
+
+rule humann_normalize:
+    input:
+        genefamilies="results/humann/main/{sample}.merged_genefamilies.tsv",
+        pathabundance="results/humann/main/{sample}.merged_pathabundance.tsv",
+        ecs="results/humann/main/regrouped/{sample}.ecs.tsv",
+    output:
+        ecs="results/humann/relab/{sample}.relab.ecs.tsv",
+        genefamilies="results/humann/relab/{sample}.relab.genefamilies.tsv",
+        pathabundance="results/humann/relab/{sample}.relab.pathabundance.tsv",
+    params:
+        conda=config['env']['conda_shell'],
+        env=directory(config['env']['biobakery3_core']),
+#    conda:
+#        "../envs/biobakery3_core.yaml",
+    log:
+        "logs/humann/renorm.log",
+    shell:
+        """
+        source {params.conda} && conda activate {params.env};
+
+        humann_renorm_table \
+        --input {input.ecs} \
+        --output {output.ecs} \
+        --units relab \
+        --special n
+
+        humann_renorm_table \
+        --input {input.genefamilies} \
+        --output {output.genefamilies} \
+        --units relab \
+        --special n
+
+        humann_renorm_table \
+        --input {input.pathabundance} \
+        --output {output.pathabundance} \
+        --units relab \
+        --special n
+        """
+
+
+rule merge_human_relab:
+    input:
+        ecs=expand("results/humann/relab/{sample}.relab.ecs.tsv", sample=samples.index),
+        genefamilies=expand("results/humann/relab/{sample}.relab.genefamilies.tsv", sample=samples.index),
+        pathabundance=expand("results/humann/relab/{sample}.relab.pathabundance.tsv", sample=samples.index),
+    output:
+        ecs="results/humann/merged/ecs.relab.tsv",
+        genefamilies="results/humann/merged/genefamilies.relab.tsv",
+        pathabundance="results/humann/merged/pathabundance.relab.tsv",
+    params:
+        dir="results/humann/relab/",
+        conda=config['env']['conda_shell'],
+        env=directory(config['env']['biobakery3_core']),
+#    conda:
+#        "../envs/biobakery3_core.yaml",
+    log:
+        "logs/humann/join_table_raw.log",
+    shell:
+        """
+        source {params.conda} && conda activate {params.env};
+
+        humann_join_tables \
+        --input {params.dir} \
+        --output {output.ecs} \
+        --file_name ecs;
+
+        humann_join_tables \
+        --input {params.dir} \
+        --output {output.genefamilies} \
+        --file_name genefamilies;
+
+        humann_join_tables \
+        --input {params.dir} \
         --output {output.pathabundance} \
         --file_name pathabundance;
         """
