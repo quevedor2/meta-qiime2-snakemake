@@ -1,0 +1,6 @@
+KeyError in line 44 of /cluster/home/quever/workflows/metagenomic_snakemake/workflow/rules/common.smk:
+'unit'
+  File "/cluster/home/quever/workflows/metagenomic_snakemake/workflow/Snakefile", line 6, in <module>
+  File "/cluster/home/quever/workflows/metagenomic_snakemake/workflow/rules/common.smk", line 44, in <module>
+  File "/cluster/home/quever/miniconda3/envs/snakemake/lib/python3.9/site-packages/pandas/core/frame.py", line 3458, in __getitem__
+  File "/cluster/home/quever/miniconda3/envs/snakemake/lib/python3.9/site-packages/pandas/core/indexes/base.py", line 3363, in get_loc

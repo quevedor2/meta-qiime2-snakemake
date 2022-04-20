@@ -1,0 +1,8 @@
+PermissionError in line 5 of /cluster/home/quever/workflows/metagenomic_snakemake/workflow/Snakefile:
+[Errno 13] Permission denied: '/cluster/projects/mcgahalab'
+  File "/cluster/home/quever/workflows/metagenomic_snakemake/workflow/Snakefile", line 5, in <module>
+  File "/cluster/home/quever/miniconda3/envs/snakemake/lib/python3.9/os.py", line 215, in makedirs
+  File "/cluster/home/quever/miniconda3/envs/snakemake/lib/python3.9/os.py", line 215, in makedirs
+  File "/cluster/home/quever/miniconda3/envs/snakemake/lib/python3.9/os.py", line 215, in makedirs
+  File "/cluster/home/quever/miniconda3/envs/snakemake/lib/python3.9/os.py", line 215, in makedirs
+  File "/cluster/home/quever/miniconda3/envs/snakemake/lib/python3.9/os.py", line 225, in makedirs

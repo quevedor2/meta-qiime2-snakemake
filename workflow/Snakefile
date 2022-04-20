@@ -1,6 +1,8 @@
 # The main entry point of your workflow.
 # After configuring, running snakemake -n in a clone of this repository should successfully execute a dry-run of the workflow.
 
+#workdir: "/cluster/home/quever/workflows/initialize/metagenomics/"
+workdir: "/cluster/projects/mcgahalab/data/mcgahalab/PASS/snakemake"
 
 include: "rules/common.smk"
 include: "rules/other.smk"
@@ -11,5 +13,4 @@ include: "rules/kneaddata.smk"
 
 rule all:
     input:
-	expand("results/kneaddata/main/{sample}_{unit}.R1_kneaddata_paired_1.fastq.gz", sample=samples.index, unit=units.index),
-
+        expand("results/kneaddata/main/{sample}.R1_kneaddata_paired_2.fastq.gz", sample=samples.index)

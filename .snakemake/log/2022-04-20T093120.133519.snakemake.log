@@ -1,0 +1,4 @@
+KeyError in line 10 of /cluster/home/quever/workflows/metagenomic_snakemake/workflow/rules/kneaddata.smk:
+'env'
+  File "/cluster/home/quever/workflows/metagenomic_snakemake/workflow/Snakefile", line 9, in <module>
+  File "/cluster/home/quever/workflows/metagenomic_snakemake/workflow/rules/kneaddata.smk", line 10, in <module>

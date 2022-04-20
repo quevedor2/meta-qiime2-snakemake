@@ -1,0 +1,26 @@
+WorkflowError in line 21 of /cluster/home/quever/workflows/metagenomic_snakemake/workflow/rules/common.smk:
+Error validating row 0 of data frame.
+ValidationError: 'sample' is a required property
+
+Failed validating 'required' in schema:
+    OrderedDict([('$schema', 'http://json-schema.org/draft-04/schema#'),
+                 ('description', 'an entry in the sample sheet'),
+                 ('properties',
+                  OrderedDict([('sample',
+                                OrderedDict([('type', 'string'),
+                                             ('description',
+                                              'sample name/identifier')])),
+                               ('condition',
+                                OrderedDict([('type', 'string'),
+                                             ('description',
+                                              'sample condition that will '
+                                              'be compared during '
+                                              'differential analysis (e.g. '
+                                              'a treatment, a tissue time, '
+                                              'a disease)')]))])),
+                 ('required', ['sample', 'condition'])])
+
+On instance:
+    {'condition': 'test', 'sample_name': 'demo1'}
+  File "/cluster/home/quever/workflows/metagenomic_snakemake/workflow/Snakefile", line 6, in <module>
+  File "/cluster/home/quever/workflows/metagenomic_snakemake/workflow/rules/common.smk", line 21, in <module>

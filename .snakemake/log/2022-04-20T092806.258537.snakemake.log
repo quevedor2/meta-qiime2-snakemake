@@ -1,0 +1,4 @@
+TypeError in line 13 of /cluster/home/quever/workflows/metagenomic_snakemake/workflow/rules/kneaddata.smk:
+conda() missing 1 required positional argument: 'conda_env'
+  File "/cluster/home/quever/workflows/metagenomic_snakemake/workflow/Snakefile", line 9, in <module>
+  File "/cluster/home/quever/workflows/metagenomic_snakemake/workflow/rules/kneaddata.smk", line 13, in <module>

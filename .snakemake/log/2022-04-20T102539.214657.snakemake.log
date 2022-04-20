@@ -1,0 +1,66 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cluster nodes: 15
+Job stats:
+job             count    min threads    max threads
+------------  -------  -------------  -------------
+all                 1              1              1
+kneaddata_pe        2              1              1
+total               3              1              1
+
+Select jobs to execute...
+
+[Wed Apr 20 10:25:42 2022]
+rule kneaddata_pe:
+    input: data/demo2.R1.fastq.gz, data/demo2.R2.fastq.gz
+    output: results/kneaddata/main/demo2.R1_kneaddata_paired_1.fastq.gz, results/kneaddata/main/demo2.R2_kneaddata_paired_1.fastq.gz
+    log: logs/kneaddata/demo2.log
+    jobid: 2
+    wildcards: sample=demo2
+    resources: tmpdir=/tmp
+
+Submitted job 2 with external jobid '5180956'.
+
+[Wed Apr 20 10:25:42 2022]
+rule kneaddata_pe:
+    input: data/demo1.R1.fastq.gz, data/demo1.R2.fastq.gz
+    output: results/kneaddata/main/demo1.R1_kneaddata_paired_1.fastq.gz, results/kneaddata/main/demo1.R2_kneaddata_paired_1.fastq.gz
+    log: logs/kneaddata/demo1.log
+    jobid: 1
+    wildcards: sample=demo1
+    resources: tmpdir=/tmp
+
+Submitted job 1 with external jobid '5180957'.
+[Wed Apr 20 10:26:03 2022]
+Error in rule kneaddata_pe:
+    jobid: 2
+    output: results/kneaddata/main/demo2.R1_kneaddata_paired_1.fastq.gz, results/kneaddata/main/demo2.R2_kneaddata_paired_1.fastq.gz
+    log: logs/kneaddata/demo2.log (check log file(s) for error message)
+    shell:
+        
+	conda activate /cluster/projects/mcgahalab/envs/biobakery3_core;
+        
+        kneaddata         --input data/demo2.R1.fastq.gz         --input data/demo2.R2.fastq.gz         -db /cluster/projects/mcgahalab/ref/metagenomics/biobakery_workflows_databases/kneaddata_db_human_genome         --trimmomatic /cluster/projects/mcgahalab/bin/trimmomatic-0.39-2         --output results/kneaddata/main/demo2.R1_kneaddata_paired_1.fastq.gz results/kneaddata/main/demo2.R2_kneaddata_paired_1.fastq.gz;
+
+        gzip results/kneaddata/main/demo2.*fastq;
+        
+        (one of the commands exited with non-zero exit code; note that snakemake uses bash strict mode!)
+    cluster_jobid: 5180956
+
+Error executing rule kneaddata_pe on cluster (jobid: 2, external: 5180956, jobscript: /cluster/projects/mcgahalab/data/mcgahalab/PASS/snakemake/.snakemake/tmp.prnheid5/snakejob.kneaddata_pe.2.sh). For error details see the cluster log and the log files of the involved rule(s).
+Trying to restart job 2.
+Select jobs to execute...
+
+[Wed Apr 20 10:26:03 2022]
+rule kneaddata_pe:
+    input: data/demo2.R1.fastq.gz, data/demo2.R2.fastq.gz
+    output: results/kneaddata/main/demo2.R1_kneaddata_paired_1.fastq.gz, results/kneaddata/main/demo2.R2_kneaddata_paired_1.fastq.gz
+    log: logs/kneaddata/demo2.log
+    jobid: 2
+    wildcards: sample=demo2
+    resources: tmpdir=/tmp
+
+Submitted job 2 with external jobid '5180958'.
+Terminating processes on user request, this might take some time.
+Will exit after finishing currently running jobs.
+Cancelling snakemake on user request.

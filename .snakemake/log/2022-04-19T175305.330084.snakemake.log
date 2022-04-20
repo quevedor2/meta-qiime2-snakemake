@@ -1,0 +1,16 @@
+Building DAG of jobs...
+InputFunctionException in line 1 of /cluster/home/quever/workflows/metagenomic_snakemake/workflow/rules/kneaddata.smk:
+Error:
+  KeyError: ('demo1', '1')
+Wildcards:
+  sample=demo1
+Traceback:
+  File "/cluster/home/quever/workflows/metagenomic_snakemake/workflow/rules/common.smk", line 61, in get_fq1
+  File "/cluster/home/quever/miniconda3/envs/snakemake/lib/python3.9/site-packages/pandas/core/indexing.py", line 925, in __getitem__
+  File "/cluster/home/quever/miniconda3/envs/snakemake/lib/python3.9/site-packages/pandas/core/indexing.py", line 1100, in _getitem_tuple
+  File "/cluster/home/quever/miniconda3/envs/snakemake/lib/python3.9/site-packages/pandas/core/indexing.py", line 822, in _getitem_lowerdim
+  File "/cluster/home/quever/miniconda3/envs/snakemake/lib/python3.9/site-packages/pandas/core/indexing.py", line 906, in _getitem_nested_tuple
+  File "/cluster/home/quever/miniconda3/envs/snakemake/lib/python3.9/site-packages/pandas/core/indexing.py", line 1164, in _getitem_axis
+  File "/cluster/home/quever/miniconda3/envs/snakemake/lib/python3.9/site-packages/pandas/core/indexing.py", line 1113, in _get_label
+  File "/cluster/home/quever/miniconda3/envs/snakemake/lib/python3.9/site-packages/pandas/core/generic.py", line 3770, in xs
+  File "/cluster/home/quever/miniconda3/envs/snakemake/lib/python3.9/site-packages/pandas/core/indexes/multi.py", line 3082, in _get_loc_level

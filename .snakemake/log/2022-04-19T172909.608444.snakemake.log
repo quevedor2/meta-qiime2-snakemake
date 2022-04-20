@@ -1,0 +1,2 @@
+SyntaxError in line 16 of /cluster/home/quever/workflows/metagenomic_snakemake/workflow/Snakefile:
+Expecting rule keyword, comment or docstrings inside a rule definition. (Snakefile, line 16)

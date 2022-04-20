@@ -1,0 +1,8 @@
+Building DAG of jobs...
+Pulling singularity image docker://continuumio/miniconda3.
+WorkflowError:
+Failed to pull singularity image from docker://continuumio/miniconda3:
+[34mINFO:   [0m Starting build...
+time="2022-04-20T09:38:01-04:00" level=warning msg="\"/run/user/1054\" directory set by $XDG_RUNTIME_DIR does not exist. Either create the directory or unset $XDG_RUNTIME_DIR.: stat /run/user/1054: no such file or directory: Trying to pull image in the event that it is a public image."
+[31mFATAL:  [0m Unable to pull docker://continuumio/miniconda3: conveyor failed to get: pinging docker registry returned: Get https://registry-1.docker.io/v2/: dial tcp 52.72.255.218:443: i/o timeout
+

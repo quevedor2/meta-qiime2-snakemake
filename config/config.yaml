@@ -11,3 +11,7 @@ database:
 
 tools:
   trimmomatic: "/cluster/projects/mcgahalab/bin/trimmomatic-0.39-2"
+
+env:
+  conda_shell: "~/miniconda3/etc/profile.d/conda.sh"
+  biobakery3_core: "/cluster/projects/mcgahalab/envs/biobakery3_core"

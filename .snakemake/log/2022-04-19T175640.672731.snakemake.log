@@ -1,0 +1,8 @@
+Building DAG of jobs...
+InputFunctionException in line 1 of /cluster/home/quever/workflows/metagenomic_snakemake/workflow/rules/kneaddata.smk:
+Error:
+  NameError: name 'u' is not defined
+Wildcards:
+  sample=demo1
+Traceback:
+  File "/cluster/home/quever/workflows/metagenomic_snakemake/workflow/rules/common.smk", line 70, in get_fq2

@@ -1,0 +1,6 @@
+AttributeError in line 15 of /cluster/home/quever/workflows/metagenomic_snakemake/workflow/Snakefile:
+'tuple' object has no attribute 'sample_name'
+  File "/cluster/home/quever/workflows/metagenomic_snakemake/workflow/Snakefile", line 15, in <module>
+  File "/cluster/home/quever/miniconda3/envs/snakemake/lib/python3.9/string.py", line 165, in vformat
+  File "/cluster/home/quever/miniconda3/envs/snakemake/lib/python3.9/string.py", line 205, in _vformat
+  File "/cluster/home/quever/miniconda3/envs/snakemake/lib/python3.9/string.py", line 276, in get_field

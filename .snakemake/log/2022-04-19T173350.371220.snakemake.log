@@ -1,0 +1,3 @@
+SyntaxError in line 10 of /cluster/home/quever/workflows/metagenomic_snakemake/workflow/rules/kneaddata.smk:
+invalid syntax
+  File "/cluster/home/quever/workflows/metagenomic_snakemake/workflow/Snakefile", line 8, in <module>
