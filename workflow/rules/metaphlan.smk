@@ -5,7 +5,7 @@ rule metaphlan:
     output:
         table="results/metaphlan/main/{sample}.s1.tsv",
         biom="results/metaphlan/main/{sample}.biom",
-        bowtie2="results/metaphlan/{sample}.s1.bowtie2.bz2",
+        bowtie2="results/metaphlan/main/{sample}.s1.bowtie2.bz2",
     params:
         conda=config['env']['conda_shell'],
         env=directory(config['env']['biobakery3_core']),
@@ -28,8 +28,6 @@ rule metaphlan:
         --biom {output.biom} \
         --bowtie2out {output.bowtie2} \
         --nproc {params.cores}
-
-        gzip results/kneaddata/main/{params.id}.*fastq;
         """
 
 rule merge_metaphlan:
@@ -50,8 +48,8 @@ rule merge_metaphlan:
         """
         source {params.conda} && conda activate {params.env};
 
-        Rscript mergeCountsMetaphlan.R \
+        Rscript scripts/mergeCountsMetaphlan.R \
         --dir {params.metaphlan_dir} \
-        --pattern {params.regex} \
+        --pattern \"{params.regex}\" \
         --out {output}
         """

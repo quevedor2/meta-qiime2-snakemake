@@ -7,10 +7,11 @@ workdir: "/cluster/projects/mcgahalab/data/mcgahalab/PASS/snakemake"
 include: "rules/common.smk"
 include: "rules/other.smk"
 include: "rules/kneaddata.smk"
-#include: "rules/metaphlan.smk"
-#include: "rules/humann.smk"
+include: "rules/metaphlan.smk"
+include: "rules/humann.smk"
 #include: "rules/strainphlan.smk"
 
 rule all:
     input:
-        expand("results/kneaddata/main/{sample}.R1_kneaddata_paired_2.fastq.gz", sample=samples.index)
+        expand("results/kneaddata/main/{sample}.R1_kneaddata_paired_2.fastq.gz", sample=samples.index),
+        "results/metaphlan/merged/merged_metaphlan.tsv",

@@ -17,6 +17,7 @@ option_list <- list(
               help = "Pattern to detect all outputs of metaphlan tsv files [default \"%default\"]")
 )
 opt <- parse_args(OptionParser(option_list=option_list))
+basedir <- getwd()
 setwd(opt$dir)
 
 # Read in all the metaphlan output files
@@ -33,5 +34,5 @@ meta_df <- Reduce(function(x,y) merge(x,y,by=c('clade_name', 'clade_taxid'), all
 colnames(meta_df)[-c(1:2)] <- gsub("(.s1)?.tsv$", "", files)
 
 #output
-write.table(meta_df, file=opt$out, sep="\t",
+write.table(meta_df, file=file.path(basedir, opt$out), sep="\t",
             col.names = T, row.names = F, quote = F)
