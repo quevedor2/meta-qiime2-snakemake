@@ -4,16 +4,18 @@ rule merge_fq:
         fq2="results/kneaddata/main/{sample}.R1_kneaddata_paired_2.fastq.gz",
     output:
         "results/humann/main/{sample}.merged.fastq.gz",
+    params:
+        id="{sample}",
     log:
-        "logs/humann/1_{sample}.merge_fq.log",
+        "logs/humann/{sample}.merge_fq.log",
     shell:
         """
-        zcat {input.fq1} {input.fq2} > {output}
+        zcat {input.fq1} {input.fq2} | gzip > {output}
         """
 
 rule humann:
     input:
-        metaphlan_table="results/metaphlan/main/{sample}.R1_kneaddata_paired_1.fastq.gz",
+        metaphlan_table="results/metaphlan/main/{sample}.s1.tsv",
         fq="results/humann/main/{sample}.merged.fastq.gz",
     output:
         genefamilies="results/humann/main/{sample}.merged_genefamilies.tsv",
@@ -83,9 +85,9 @@ rule merge_human_raw:
         genefamilies="results/humann/main/",
         pathabundance="results/humann/main/",
         conda=config['env']['conda_shell'],
-        env=directory(config['env']['r41']),
+        env=directory(config['env']['biobakery3_core']),
     log:
-        "logs/humann/{sample}.merge.log",
+        "logs/humann/join_table_raw.log",
     shell:
         """
         source {params.conda} && conda activate {params.env};
@@ -93,15 +95,15 @@ rule merge_human_raw:
         humann_join_tables \
         --input {params.ecs} \
         --output {output.ecs} \
-        --file_name ecs
+        --file_name ecs;
 
         humann_join_tables \
         --input {params.genefamilies} \
         --output {output.genefamilies} \
-        --file_name genefamilies
+        --file_name genefamilies;
 
         humann_join_tables \
         --input {params.pathabundance} \
         --output {output.pathabundance} \
-        --file_name pathabundance
+        --file_name pathabundance;
         """

@@ -8,10 +8,11 @@ metaphlan:
   cpus-per-task : 4
   mem : 20G
 
-indelrealigner:
-  mem : 8192
-  cpus-per-task : 8
-  time : 04:00:00
+humann:
+  cpus-per-task : 4
+  mem : 60G
+  time : 3-00:00:00
+  partition : 'himem'
 
 realigner_target_creator:
   mem : 8192

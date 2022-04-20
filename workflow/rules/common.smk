@@ -83,7 +83,7 @@ def get_raw_ecs(wildcards):
     res = []
     for unit in units.itertuples():
         res.append(
-            "results/humann/main/regrouped/{sample}.ecs.tsv".format(
+            "results/humann/main/regrouped/{}.ecs.tsv".format(
                 unit.sample_name
             )
         )
@@ -93,7 +93,7 @@ def get_raw_genefamilies(wildcards):
     res = []
     for unit in units.itertuples():
         res.append(
-            "results/humann/main/{}.merged_genefamilies.tsv",.format(
+            "results/humann/main/{}.merged_genefamilies.tsv".format(
                 unit.sample_name
             )
         )
@@ -103,7 +103,7 @@ def get_raw_pathabundance(wildcards):
     res = []
     for unit in units.itertuples():
         res.append(
-            "results/humann/main/{}.merged_pathabundance.tsv",.format(
+            "results/humann/main/{}.merged_pathabundance.tsv".format(
                 unit.sample_name
             )
         )
