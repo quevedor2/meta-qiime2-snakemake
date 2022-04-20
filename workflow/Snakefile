@@ -2,7 +2,7 @@
 # After configuring, running snakemake -n in a clone of this repository should successfully execute a dry-run of the workflow.
 
 #workdir: "/cluster/home/quever/workflows/initialize/metagenomics/"
-workdir: "/cluster/projects/mcgahalab/data/mcgahalab/PASS/snakemake"
+workdir: "/cluster/projects/mcgahalab/data/mcgahalab/PASS/human"
 
 include: "rules/common.smk"
 include: "rules/other.smk"
