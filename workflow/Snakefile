@@ -18,3 +18,6 @@ rule all:
         "results/humann/merged/ecs.tsv",
         "results/humann/merged/genefamilies.tsv",
         "results/humann/merged/pathabundance.tsv",
+        "results/humann/merged/ecs.relab.tsv",
+        "results/humann/merged/genefamilies.relab.tsv",
+        "results/humann/merged/pathabundance.relab.tsv",

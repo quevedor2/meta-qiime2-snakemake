@@ -125,7 +125,7 @@ rule humann_normalize:
 #    conda:
 #        "../envs/biobakery3_core.yaml",
     log:
-        "logs/humann/renorm.log",
+        "logs/humann/{sample}_renorm.log",
     shell:
         """
         source {params.conda} && conda activate {params.env};
@@ -134,19 +134,19 @@ rule humann_normalize:
         --input {input.ecs} \
         --output {output.ecs} \
         --units relab \
-        --special n
+        --special n;
 
         humann_renorm_table \
         --input {input.genefamilies} \
         --output {output.genefamilies} \
         --units relab \
-        --special n
+        --special n;
 
         humann_renorm_table \
         --input {input.pathabundance} \
         --output {output.pathabundance} \
         --units relab \
-        --special n
+        --special n;
         """
 
 
@@ -166,7 +166,7 @@ rule merge_human_relab:
 #    conda:
 #        "../envs/biobakery3_core.yaml",
     log:
-        "logs/humann/join_table_raw.log",
+        "logs/humann/join_table_relab.log",
     shell:
         """
         source {params.conda} && conda activate {params.env};
