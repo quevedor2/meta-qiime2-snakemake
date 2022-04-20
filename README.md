@@ -35,38 +35,40 @@ For installation details, see the [instructions in the Snakemake documentation](
 The following will let you activate pre-built conda environments in a rule when submitting jobs to the cluster and is based off the post by Samir on https://stackoverflow.com/questions/59107413/activating-existing-conda-enviornments-in-snakemake (Jun 4-2021)
 
 Back up your original conda file:
-
-    `cp ~/miniconda3/etc/profile.d/conda.sh ~/miniconda3/etc/profile.d/conda_bkup.sh`
+x
+    cp ~/miniconda3/etc/profile.d/conda.sh ~/miniconda3/etc/profile.d/conda_bkup.sh
 
 Modify your `conda.sh` file to add the following within the **__conda_activate()** block:
-    ```__conda_activate() {
-    if [[ "$-" =~ .*u.* ]]; then
-        local bash_set_u
-        bash_set_u="on"
-        ## temporarily disable u flag
-        ## allow unbound variables from conda env
-        ## during activate/deactivate commands in
-        ## subshell else script will fail with set -u flag
-        ## https://github.com/conda/conda/issues/8186#issuecomment-532874667    
-        set +u
-    else
-        local bash_set_u
-        bash_set_u="off"
-    fi
-    
-    # ... rest of code from the original script
-    ```
+
+```
+__conda_activate() {
+if [[ "$-" =~ .*u.* ]]; then
+    local bash_set_u
+    bash_set_u="on"
+    ## temporarily disable u flag
+    ## allow unbound variables from conda env
+    ## during activate/deactivate commands in
+    ## subshell else script will fail with set -u flag
+    ## https://github.com/conda/conda/issues/8186#issuecomment-532874667    
+    set +u
+else
+    local bash_set_u
+    bash_set_u="off"
+fi
+
+# ... rest of code from the original script
+```
 
 Add the follwoing section to the end of your **_conda_activate()** block:
 
-    ```
-    ## reenable set -u if it was enabled prior to
-    ## conda activate/deactivate operation
-    if [[ "${bash_set_u}" == "on" ]]; then
-        set -u
-    fi
-    }
-    ```
+```
+## reenable set -u if it was enabled prior to
+## conda activate/deactivate operation
+if [[ "${bash_set_u}" == "on" ]]; then
+    set -u
+fi
+}
+```
 
 ### Step 5: Execute workflow
 
