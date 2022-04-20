@@ -5,8 +5,8 @@ samples: "config/samples.tsv"
 units: "config/units.tsv"
 
 database:
-  nucleotide: ""
-  protein: ""
+  nucleotide: "/cluster/projects/mcgahalab/ref/metagenomics/biobakery_workflows_databases/humann/chocophlan/"
+  protein: "/cluster/projects/mcgahalab/ref/metagenomics/biobakery_workflows_databases/humann/uniref/"
   kneaddata_human: "/cluster/projects/mcgahalab/ref/metagenomics/biobakery_workflows_databases/kneaddata_db_human_genome"
   bowtie2db: "/cluster/projects/mcgahalab/ref/metagenomics/biobakery_workflows_databases/metaphlan/metaphlan_databases"
 
