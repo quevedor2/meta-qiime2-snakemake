@@ -7,7 +7,7 @@ units: "config/units.tsv"
 database:
   nucleotide: "/cluster/projects/mcgahalab/ref/metagenomics/biobakery_workflows_databases/humann/chocophlan/"
   protein: "/cluster/projects/mcgahalab/ref/metagenomics/biobakery_workflows_databases/humann/uniref/"
-  kneaddata_human: "/cluster/projects/mcgahalab/ref/metagenomics/biobakery_workflows_databases/kneaddata_db_human_genome"
+  kneaddata: "/cluster/projects/mcgahalab/ref/metagenomics/biobakery_workflows_databases/kneaddata_db/hg37"
   bowtie2db: "/cluster/projects/mcgahalab/ref/metagenomics/biobakery_workflows_databases/metaphlan/metaphlan_databases"
 
 tools:

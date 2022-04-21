@@ -11,7 +11,7 @@ rule kneaddata_pe:
         conda=config['env']['conda_shell'],
         env=directory(config['env']['biobakery3_core']),
         trimmomatic=directory(config['tools']['trimmomatic']),
-        database=directory(config['database']['kneaddata_human']),
+        database=directory(config['database']['kneaddata']),
 #    conda:
 #        "../envs/biobakery3_core.yaml",
     log:
