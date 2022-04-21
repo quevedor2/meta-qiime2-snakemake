@@ -11,7 +11,7 @@ rule metaphlan:
         conda=config['env']['conda_shell'],
         env=directory(config['env']['biobakery3_core']),
         database=directory(config['database']['bowtie2db']),
-        cores=config['resources']['metaphlan_nrpoc'],
+        cores=config['resources']['metaphlan_nproc'],
 #    conda:
 #        "../envs/biobakery3_core.yaml",
     log:
@@ -44,7 +44,7 @@ rule merge_metaphlan:
         conda=config['env']['conda_shell'],
         env=directory(config['env']['r41']),
         database=directory(config['database']['bowtie2db']),
-        cores=config['resources']['metaphlan_nrpoc'],
+        cores=config['resources']['metaphlan_nproc'],
     log:
         "logs/metaphlan/merge.log",
     shell:
