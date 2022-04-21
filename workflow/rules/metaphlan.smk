@@ -6,6 +6,7 @@ rule metaphlan:
         table="results/metaphlan/main/{sample}.s1.tsv",
         biom="results/metaphlan/main/{sample}.biom",
         bowtie2="results/metaphlan/main/{sample}.s1.bowtie2.bz2",
+        sam=temp("results/metaphlan/main/sams/{sample}.sam"),
     params:
         conda=config['env']['conda_shell'],
         env=directory(config['env']['biobakery3_core']),
@@ -27,6 +28,7 @@ rule metaphlan:
         --bowtie2db {params.database} \
         --biom {output.biom} \
         --bowtie2out {output.bowtie2} \
+        --samout {output.sam} \
         --nproc {params.cores}
         """
 
@@ -34,7 +36,8 @@ rule merge_metaphlan:
     input:
         get_all_metaphlan_tables,
     output:
-        table="results/metaphlan/merged/merged_metaphlan.tsv",
+        cnt_table="results/metaphlan/merged/merged_metaphlan.count.tsv",
+        relab_table="results/metaphlan/merged/merged_metaphlan.relab.tsv",
     params:
         metaphlan_dir="results/metaphlan/main",
         regex="*s1.tsv$",
@@ -51,5 +54,12 @@ rule merge_metaphlan:
         Rscript scripts/mergeCountsMetaphlan.R \
         --dir {params.metaphlan_dir} \
         --pattern \"{params.regex}\" \
-        --out {output}
+        --column estimated_number_of_reads_from_the_clade \
+        --out {output.cnt_table}
+
+        Rscript scripts/mergeCountsMetaphlan.R \
+        --dir {params.metaphlan_dir} \
+        --pattern \"{params.regex}\" \
+        --column relative_abundance \
+        --out {output.relab_table}
         """

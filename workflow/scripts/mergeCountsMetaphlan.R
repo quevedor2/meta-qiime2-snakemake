@@ -14,7 +14,9 @@ option_list <- list(
   make_option(c("-o", "--out"), default="output.tsv",
               help = "output file name [default \"%default\"]"),
   make_option(c("-p", "--pattern"), default="*s1.tsv$",
-              help = "Pattern to detect all outputs of metaphlan tsv files [default \"%default\"]")
+              help = "Pattern to detect all outputs of metaphlan tsv files [default \"%default\"]"),
+  make_option(c("-i", "--column"), default="estimated_number_of_reads_from_the_clade",
+              help = "column name containing value to merge on [default \"%default\"]"),
 )
 opt <- parse_args(OptionParser(option_list=option_list))
 basedir <- getwd()
@@ -26,7 +28,7 @@ metas <- lapply(files, function(f){
   metaphlan <- read.table(f, sep="\t", comment.char='', skip=4, header=T,
                           check.names = F, stringsAsFactors = F)
   colnames(metaphlan)[1] <- gsub("^#", "", colnames(metaphlan)[1])
-  metaphlan[,c('clade_name', 'clade_taxid', 'estimated_number_of_reads_from_the_clade')]
+  metaphlan[,c('clade_name', 'clade_taxid', opt$column)]
 })
 
 # Merge the individual files by the clade name and relabel the columns by sample names

@@ -13,8 +13,8 @@ include: "rules/humann.smk"
 
 rule all:
     input:
-        expand("results/kneaddata/main/{sample}.R1_kneaddata_paired_2.fastq.gz", sample=samples.index),
-        "results/metaphlan/merged/merged_metaphlan.tsv",
+        "results/metaphlan/merged/merged_metaphlan.count.tsv",
+        "results/metaphlan/merged/merged_metaphlan.relab.tsv",
         "results/humann/merged/ecs.tsv",
         "results/humann/merged/genefamilies.tsv",
         "results/humann/merged/pathabundance.tsv",
