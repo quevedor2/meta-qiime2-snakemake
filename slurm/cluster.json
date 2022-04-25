@@ -17,3 +17,15 @@ humann:
   mem : 60G
   time : 3-00:00:00
   partition : 'himem'
+
+generate_markers:
+  cpus-per-task : 4
+  mem : 30G
+  time : 1-00:00:00
+  partition : 'all'
+  
+strainphlan:
+  cpus-per-task : 4
+  mem : 30G
+  time : 1-00:00:00
+  partition : 'all'

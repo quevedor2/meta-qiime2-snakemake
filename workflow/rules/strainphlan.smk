@@ -9,7 +9,7 @@ rule generate_markers:
         conda=config['env']['conda_shell'],
         env=directory(config['env']['biobakery3_core']),
     log:
-        "logs/strainphlan/generate_markers.log",
+        "logs/strainphlan/generate_markers_{sample}.log",
     shell:
         """
         source {params.conda} && conda activate {params.env};
