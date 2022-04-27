@@ -64,3 +64,40 @@ rule order_clade:
         --clade {input.clade} \
         --output {output}
         """
+
+rule strainphlan:
+    input:
+        pkls=expand("results/strainphlan/consensus_markers/{sample}.pkl", sample=samples.index),
+        clades="results/strainphlan/consensus_markers/clades_list_order_by_average_abundance.txt",
+    output:
+        "results/strainphlan/strainphlan.out",
+    params:
+        conda=config['env']['conda_shell'],
+        env=directory(config['env']['biobakery3_core']),
+        database=config['database']['metaphlan_pkl'],
+        pkldir="results/strainphlan/consensus_markers",
+        outdir="results/strainphlan",
+        clade="",
+        cores=config['resources']['strainphlan_nproc'],
+#    conda:
+#        "../envs/biobakery3_core.yaml",
+    log:
+        "logs/strainphlan/strainphlan.log",
+    shell:
+        """
+        source {params.conda} && conda activate {params.env};
+        
+        for i in $(cat {input.clades}); do
+            echo ${i} >> .tmp;
+            strainphlan \
+            --samples {params.pkldir}/*.pkl \
+            --database {params.database} \
+            --output_dir {params.outdir} \
+            --clade ${i} \
+            --nprocs {params.cores}
+        done;
+        
+        if [ "$(wc -l < {input.clades})" -eq "$(wc -l < .tmp)" ]; then
+            mv tmp {output};
+        fi
+        """
