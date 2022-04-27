@@ -55,7 +55,7 @@ rule merge_metaphlan:
         --dir {params.metaphlan_dir} \
         --pattern \"{params.regex}\" \
         --column estimated_number_of_reads_from_the_clade \
-        --out {output.cnt_table}
+        --out {output.cnt_table};
 
         Rscript scripts/mergeCountsMetaphlan.R \
         --dir {params.metaphlan_dir} \

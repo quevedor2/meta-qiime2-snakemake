@@ -29,7 +29,7 @@ rule humann:
         env=directory(config['env']['biobakery3_core']),
         nucleotide_db=directory(config['database']['nucleotide']),
         protein_db=directory(config['database']['protein']),
-        cores=config['resources']['humann_proc'],
+        cores=config['resources']['humann_nproc'],
 #    conda:
 #        "../envs/biobakery3_core.yaml",
     log:

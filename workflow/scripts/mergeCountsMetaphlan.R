@@ -16,7 +16,7 @@ option_list <- list(
   make_option(c("-p", "--pattern"), default="*s1.tsv$",
               help = "Pattern to detect all outputs of metaphlan tsv files [default \"%default\"]"),
   make_option(c("-i", "--column"), default="estimated_number_of_reads_from_the_clade",
-              help = "column name containing value to merge on [default \"%default\"]"),
+              help = "column name containing value to merge on [default \"%default\"]")
 )
 opt <- parse_args(OptionParser(option_list=option_list))
 basedir <- getwd()
