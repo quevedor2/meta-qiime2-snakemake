@@ -89,15 +89,24 @@ rule strainphlan:
         
         for i in $(cat {input.clades}); do
             echo ${{i}} >> .tmp;
+            
+            if [ ! -f "${{i}}.fna" ]; then
+                extract_markers.py \
+                --database {params.database} \
+                --clade ${{i}} \
+                --output_dir {params.outdir};
+            fi;
+            
             strainphlan \
             --samples {params.pkldir}/*.pkl \
             --database {params.database} \
             --output_dir {params.outdir} \
             --clade ${{i}} \
-            --nprocs {params.cores}
+            --clade_markers ${{i}}.fna \
+            --nprocs {params.cores};
         done;
         
         if [ "$(wc -l < {input.clades})" -eq "$(wc -l < .tmp)" ]; then
-            mv tmp {output};
+            mv .tmp {output};
         fi
         """
