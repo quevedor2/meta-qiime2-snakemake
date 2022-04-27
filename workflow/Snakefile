@@ -22,3 +22,4 @@ rule all:
         "results/humann/merged/genefamilies.relab.tsv",
         "results/humann/merged/pathabundance.relab.tsv",
         "results/strainphlan/consensus_markers/clades_list_order_by_average_abundance.txt",
+        "results/strainphlan/strainphlan.out",

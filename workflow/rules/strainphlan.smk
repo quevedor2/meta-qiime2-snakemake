@@ -88,12 +88,12 @@ rule strainphlan:
         source {params.conda} && conda activate {params.env};
         
         for i in $(cat {input.clades}); do
-            echo ${i} >> .tmp;
+            echo ${{i}} >> .tmp;
             strainphlan \
             --samples {params.pkldir}/*.pkl \
             --database {params.database} \
             --output_dir {params.outdir} \
-            --clade ${i} \
+            --clade ${{i}} \
             --nprocs {params.cores}
         done;
         
