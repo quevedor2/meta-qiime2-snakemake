@@ -87,22 +87,27 @@ rule strainphlan:
         """
         source {params.conda} && conda activate {params.env};
         
+        touch .tmp; rm .tmp;
         for i in $(cat {input.clades}); do
             echo ${{i}} >> .tmp;
             
             if [ ! -f "${{i}}.fna" ]; then
+                echo "Extracting markers..."; 
+                
                 extract_markers.py \
                 --database {params.database} \
                 --clade ${{i}} \
                 --output_dir {params.outdir};
             fi;
             
+            echo "> Strainphlan: ${{i}}";
+            
             strainphlan \
             --samples {params.pkldir}/*.pkl \
             --database {params.database} \
             --output_dir {params.outdir} \
             --clade ${{i}} \
-            --clade_markers ${{i}}.fna \
+            --clade_markers {params.outdir}/${{i}}.fna \
             --nprocs {params.cores};
         done;
         
