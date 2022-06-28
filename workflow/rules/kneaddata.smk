@@ -27,5 +27,7 @@ rule kneaddata_pe:
         --trimmomatic {params.trimmomatic} \
         --output {params.outdir};
         
+        echo "Gzipping...";
         gzip results/kneaddata/main/{params.id}.*fastq;
+        echo "Gzipped and done."
         """
