@@ -3,8 +3,14 @@ rule kneaddata_pe:
         fq1=get_fq1,
         fq2=get_fq2,
     output:
-        paired1="results/kneaddata/main/{sample}.knead1.fastq.gz",
-        paired2="results/kneaddata/main/{sample}.knead2.fastq.gz",
+        paired1="results/kneaddata/main/{sample}.R1_kneaddata_paired_1.fastq.gz",
+        paired2="results/kneaddata/main/{sample}.R1_kneaddata_paired_2.fastq.gz",
+        trimmed1=temp("results/kneaddata/main/{sample}.R1_kneaddata.trimmed.1.fastq.gz"),
+        trimmed2=temp("results/kneaddata/main/{sample}.R1_kneaddata.trimmed.2.fastq.gz"),
+        strimmed1=temp("results/kneaddata/main/{sample}.R1_kneaddata.trimmed.single.1.fastq.gz"),
+        strimmed2=temp("results/kneaddata/main/{sample}.R1_kneaddata.trimmed.single.2.fastq.gz"),
+        unmatched1=temp("results/kneaddata/main/{sample}.R1_kneaddata_unmatched_1.fastq.gz"),
+        unmatched2=temp("results/kneaddata/main/{sample}.R1_kneaddata_unmatched_2.fastq.gz"),
     params:
         id="{sample}",
         outdir=directory("results/kneaddata/main/"),

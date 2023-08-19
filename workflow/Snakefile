@@ -13,13 +13,16 @@ include: "rules/strainphlan.smk"
 
 rule all:
     input:
-        "results/metaphlan/merged/merged_metaphlan.count.tsv",
-        "results/metaphlan/merged/merged_metaphlan.relab.tsv",
-        "results/humann/merged/ecs.tsv",
-        "results/humann/merged/genefamilies.tsv",
-        "results/humann/merged/pathabundance.tsv",
-        "results/humann/merged/ecs.relab.tsv",
-        "results/humann/merged/genefamilies.relab.tsv",
-        "results/humann/merged/pathabundance.relab.tsv",
-        "results/strainphlan/consensus_markers/clades_list_order_by_average_abundance.txt",
-        "results/strainphlan/strainphlan.out",
+        expand("results/kneaddata/main/{sample}.knead1.fastq.gz", sample = samples["sample_name"]),
+        expand("results/metaphlan/main/{sample}.s1.tsv", sample = samples["sample_name"]),
+        "results/metaphlan/merged/merged_metaphlan.count.tsv"
+#        "results/metaphlan/merged/merged_metaphlan.count.tsv",
+#        "results/metaphlan/merged/merged_metaphlan.relab.tsv",
+#        "results/humann/merged/ecs.tsv",
+#        "results/humann/merged/genefamilies.tsv",
+#        "results/humann/merged/pathabundance.tsv",
+#        "results/humann/merged/ecs.relab.tsv",
+#        "results/humann/merged/genefamilies.relab.tsv",
+#        "results/humann/merged/pathabundance.relab.tsv",
+#        "results/strainphlan/consensus_markers/clades_list_order_by_average_abundance.txt",
+#        "results/strainphlan/strainphlan.out",
